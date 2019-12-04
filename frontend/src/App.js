@@ -1,16 +1,22 @@
 import React from 'react';
 import { Dashboard } from './component/Dashboard'
 import { Header } from './component/layout/Header'
-
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
+import AddProject from './component/project/AddProject';
 
 function App() {
     return (
-        <div className="App">        
+        <Router> 
+            <div className="App">
             <Header />
-            <Dashboard />            
+           
+            <Route exact path="/" component={Dashboard}/>
+            <Route exact path="/addProject" component={AddProject}/>
         </div>
+        </Router>
+
     );
 }
 
