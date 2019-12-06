@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Project {
     @Id
@@ -20,22 +21,39 @@ public class Project {
     @NotBlank(message = "project name is required")
     private String projectName;
     @NotBlank(message = "project idenfifier is required")
-    @Size(min=4,max = 5,message = "please user 4 to 5 characters")
-    @Column(updatable = false,unique = true)
+    @Size(min = 4, max = 5, message = "please user 4 to 5 characters")
+    @Column(updatable = false, unique = true)
     private String projectIdentifier;
     @NotBlank(message = " projecte description is require")
     private String description;
-    @JsonFormat(pattern="yyyy-mm-dd")
-    private Date start_data;
-    @JsonFormat(pattern="yyyy-mm-dd")
-    private Date end_data;
-    @JsonFormat(pattern="yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private Date start_date;
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private Date end_date;
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    @Column(updatable = false)
     private Date created_At;
-    @JsonFormat(pattern="yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updated_At;
 
     public long getId() {
         return id;
+    }
+
+    public Date getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(Date end_date) {
+        this.end_date = end_date;
+    }
+
+    public Date getStart_date() {
+        return start_date;
+    }
+
+    public void setStart_date(Date start_date) {
+        this.start_date = start_date;
     }
 
     public void setId(long id) {
@@ -56,22 +74,6 @@ public class Project {
 
     public void setCreated_At(Date created_At) {
         this.created_At = created_At;
-    }
-
-    public Date getEnd_data() {
-        return end_data;
-    }
-
-    public void setEnd_data(Date end_data) {
-        this.end_data = end_data;
-    }
-
-    public Date getStart_data() {
-        return start_data;
-    }
-
-    public void setStart_data(Date start_data) {
-        this.start_data = start_data;
     }
 
     public String getDescription() {

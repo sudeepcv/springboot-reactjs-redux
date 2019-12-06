@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import {connect} from 'react-redux';
 import {createProject} from '../../actions/projectActions'
-export class AddProject extends Component {
+class AddProject extends Component {
       constructor() {
     super();
 
@@ -126,9 +126,10 @@ export class AddProject extends Component {
                     />
                   </div>
 
-                  <input
+                <input
                     type="submit"
                     className="btn btn-primary btn-block mt-4"
+                    value="Save"
                   />
                 </form>
               </div>
@@ -141,6 +142,9 @@ export class AddProject extends Component {
     }
 }
 AddProject.propTypes={
-    createProject:PropTypes.func.isRequired
+    createProject:PropTypes.func.isRequired,
+    errors:PropTypes.object.isRequired
 }
-export default connect(null,{createProject})(AddProject);
+const mapStateToProps=state=> ({errors:state.errors})
+
+export default connect(mapStateToProps,{createProject})(AddProject);
