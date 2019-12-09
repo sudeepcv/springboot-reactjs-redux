@@ -1,7 +1,9 @@
 package com.sudeep.springbootreactjsredux.service;
 
 import com.sudeep.springbootreactjsredux.exception.ProjectIdException;
+import com.sudeep.springbootreactjsredux.model.Backlog;
 import com.sudeep.springbootreactjsredux.model.Project;
+import com.sudeep.springbootreactjsredux.repository.BacklogRepository;
 import com.sudeep.springbootreactjsredux.repository.ProjectRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,25 @@ import org.springframework.stereotype.Service;
 public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
+     @Autowired
+    private BacklogRepository backlogRepository;
 
     @Override
     public Project saveOrUpdateProject(Project project) {
         try {
-            project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+
+            if(project.getProjectIdentifier()==null){
+                Backlog backlog = new Backlog();
+                project.setBacklog(backlog);
+                backlog.setProject(project);
+                backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+            }
+
+            if(project.getProjectIdentifier()!=null){
+                project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()));
+            }
+
+            // project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
             return projectRepository.save(project);
         } catch (Exception e) {
             throw new ProjectIdException(
