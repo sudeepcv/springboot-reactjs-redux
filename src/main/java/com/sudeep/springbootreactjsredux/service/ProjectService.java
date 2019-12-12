@@ -1,15 +1,19 @@
 package com.sudeep.springbootreactjsredux.service;
 
+import javax.validation.Valid;
+
 import com.sudeep.springbootreactjsredux.model.Project;
 
 public interface ProjectService {
 
-    Project saveOrUpdateProject(Project project);
+	Project saveOrUpdateProject(@Valid Project project);
 
-	Project findProjectByProjectIdentifier(String projectId);
+    Project findProjectByIdentifier(String projectId);
 
-    Iterable<Project> findAllProject();
+    Iterable<Project> findAllProjects();
 
-    void deleteProjectByIdentifier(String projectid);
+    void deleteProjectByIdentifier(String projectId);
+
+
 
 }

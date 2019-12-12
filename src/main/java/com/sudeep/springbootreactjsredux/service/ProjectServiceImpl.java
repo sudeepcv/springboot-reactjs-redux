@@ -11,54 +11,59 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
-    @Autowired
+      @Autowired
     private ProjectRepository projectRepository;
-     @Autowired
+    @Autowired
     private BacklogRepository backlogRepository;
+    public Project saveOrUpdateProject(Project project){
+        try{
+            project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 
-    @Override
-    public Project saveOrUpdateProject(Project project) {
-        try {
-
-            if(project.getProjectIdentifier()==null){
+            if(project.getId()==null){
                 Backlog backlog = new Backlog();
                 project.setBacklog(backlog);
                 backlog.setProject(project);
                 backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
             }
 
-            if(project.getProjectIdentifier()!=null){
+            if(project.getId()!=null){
                 project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()));
             }
 
-            // project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
             return projectRepository.save(project);
-        } catch (Exception e) {
-            throw new ProjectIdException(
-                    "project id:" + project.getProjectIdentifier().toUpperCase() + "already exists");
+
+        }catch (Exception e){
+            throw new ProjectIdException("Project ID '"+project.getProjectIdentifier().toUpperCase()+"' already exists");
         }
+
     }
 
-    @Override
-    public Project findProjectByProjectIdentifier(String projectId) {
-        Project project = projectRepository.findByProjectIdentifier(projectId);
-        if (project == null) {
-            throw new ProjectIdException("Project does not exist");
+
+    public Project findProjectByIdentifier(String projectId){
+
+        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+
+        if(project == null){
+            throw new ProjectIdException("Project ID '"+projectId+"' does not exist");
+
         }
+
+
         return project;
     }
 
-    @Override
-    public Iterable<Project> findAllProject() {
+    public Iterable<Project> findAllProjects(){
         return projectRepository.findAll();
     }
 
-    @Override
-    public void deleteProjectByIdentifier(String projectid) {
+
+    public void deleteProjectByIdentifier(String projectid){
         Project project = projectRepository.findByProjectIdentifier(projectid.toUpperCase());
-        if (project == null) {
-            throw new ProjectIdException("Project does not exist");
+
+        if(project == null){
+            throw  new  ProjectIdException("Cannot Project with ID '"+projectid+"'. This project does not exist");
         }
+
         projectRepository.delete(project);
     }
 }

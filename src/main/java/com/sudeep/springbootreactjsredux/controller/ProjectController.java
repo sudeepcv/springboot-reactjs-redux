@@ -24,33 +24,37 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
     @Autowired
-    private MapValidationError mapValidationError;
+    private MapValidationError mapValidationErrorService;
 
     @PostMapping("")
-    public ResponseEntity<?> createNewProjecct(@Valid @RequestBody Project project, BindingResult result) {
-        ResponseEntity<?> errorMap = mapValidationError.mapValidationService(result);
-        if (errorMap != null) {
-            return errorMap;
-        }
-        Project savedProject = projectService.saveOrUpdateProject(project);
-        return new ResponseEntity<Project>(savedProject, HttpStatus.CREATED);
+    public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
+
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap!=null) return errorMap;
+
+        Project project1 = projectService.saveOrUpdateProject(project);
+        return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
     }
 
+
     @GetMapping("/{projectId}")
-    public ResponseEntity<?> getProjectById(@PathVariable String projectId) {
-        Project project = projectService.findProjectByProjectIdentifier(projectId);
+    public ResponseEntity<?> getProjectById(@PathVariable String projectId){
+
+        Project project = projectService.findProjectByIdentifier(projectId);
+
         return new ResponseEntity<Project>(project, HttpStatus.OK);
     }
 
-    @GetMapping("all")
-    public Iterable<Project> getAllProject() {
-        return projectService.findAllProject();
-    }
 
-    @DeleteMapping("/{projectid}")
-    public ResponseEntity<?> delteProject(@PathVariable String projectid) {
-        projectService.deleteProjectByIdentifier(projectid);
-        return new ResponseEntity<String>("Project with id:" + projectid + " was deleted",HttpStatus.OK);
+    @GetMapping("/all")
+    public Iterable<Project> getAllProjects(){return projectService.findAllProjects();}
+
+
+    @DeleteMapping("/{projectId}")
+    public ResponseEntity<?> deleteProject(@PathVariable String projectId){
+        projectService.deleteProjectByIdentifier(projectId);
+
+        return new ResponseEntity<String>("Project with ID: '"+projectId+"' was deleted", HttpStatus.OK);
     }
 
 }
