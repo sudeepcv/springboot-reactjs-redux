@@ -25,7 +25,7 @@ In order to open this repository in git pod ide:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/sudeepcv/springboot-reactjs-redux)
 
-To run the application (java version:1.8):
+To run the application (java version:1.8- in gitpod ide change the java version to 1.8 using sdk man):
 
 `./mvnw spring-boot:run`
 
