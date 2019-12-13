@@ -29,6 +29,7 @@ class Landing extends Component {
                 <Link className="btn btn-lg btn-secondary mr-2" to="/login">
                   Login
                 </Link>
+                 <a class="btn btn-lg btn-primary" href="https://basics-in-java.blogspot.com/" role="button">sudeep cv-Blog</a>
               </div>
             </div>
           </div>
