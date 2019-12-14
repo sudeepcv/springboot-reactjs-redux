@@ -130,6 +130,7 @@ class AddProjectTask extends Component {
 
                 <input
                   type="submit"
+                   value="Save"
                   className="btn btn-primary btn-block mt-4"
                 />
               </form>

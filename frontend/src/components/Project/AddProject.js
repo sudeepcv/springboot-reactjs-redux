@@ -128,7 +128,7 @@ class AddProject extends Component {
                   </div>
 
                   <input
-                    type="submit"
+                    type="submit" value="Save"
                     className="btn btn-primary btn-block mt-4"
                   />
                 </form>
